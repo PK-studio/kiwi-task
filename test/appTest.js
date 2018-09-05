@@ -29,8 +29,8 @@ describe('Test for this app: replace number with words', () => {
   });
 
   describe('convertToArray method', ()=>{
-    it('it should return arrey of digits', ()=>{
-      expect(app.converToArray()).to.be.a('array');
+    it('it should return arrey of 9 elements', ()=>{
+      expect(app.converToArray().length).to.equal(9);
     })
   });
 })

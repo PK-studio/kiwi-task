@@ -1,7 +1,8 @@
 module.exports = {
   app: function() {
-    let number;
+    let number = null;
     this.passNumber = (num) => {
+      if(!num || typeof num != 'number') return number;
       number = num;
       return number;
     };

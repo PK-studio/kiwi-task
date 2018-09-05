@@ -4,7 +4,10 @@ const appLocation = require("../app");
 
 describe("Test for this app: replace number with words", () => {
   let app = null;
-  app = new appLocation.app();
+
+  beforeEach( () => {
+    app = new appLocation.app();
+  })
 
   describe("Initialization", () => {
     it("It should return object", () => {

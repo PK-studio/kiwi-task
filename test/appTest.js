@@ -33,4 +33,10 @@ describe('Test for this app: replace number with words', () => {
       expect(app.converToArray().length).to.equal(9);
     })
   });
+
+  describe('groupElement method', () => {
+    it('expect to return 3 arrays', () => {
+      expect(app.groupElement().length).to.equal(3);
+    })
+  })
 })

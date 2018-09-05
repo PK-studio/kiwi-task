@@ -11,10 +11,8 @@ module.exports = {
 
     this.converToArray= () => {
       arrayOfDigits = number.toString().split("");
-      let iteration = arrayOfDigits.length;
-      while(iteration < 9){
+      while(arrayOfDigits.length < 9){
         arrayOfDigits.unshift(0)
-        iteration = arrayOfDigits.length;
       }
       return arrayOfDigits
     };

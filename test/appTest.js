@@ -19,5 +19,8 @@ describe("Test for this app: replace number with words", () => {
     it('it should return null when pass NaN', () => {
       expect(app.passNumber("string")).to.be.null;
     })
+    it("it should return null when pass nothing", () => {
+      expect(app.passNumber()).to.be.null;
+    })
   });
 })

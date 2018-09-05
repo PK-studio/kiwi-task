@@ -1,5 +1,9 @@
 module.exports = {
   app: function() {
-    const test = "test";
+    let number;
+    this.passNumber = (num) => {
+      number = num;
+      return number;
+    };
   }
 };

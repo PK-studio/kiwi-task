@@ -13,8 +13,11 @@ describe("Test for this app: replace number with words", () => {
   });
 
   describe("Run app", () => {
-    it("it should return empty array", () => {
-      expect(app().to.be.empty);
+    it("it should return a number when pass number", () => {
+      expect(app.passNumber(10)).to.be.a('number');
     });
+    it('it should return null when pass NaN', () => {
+      expect(app.passNumber("string")).to.be.null;
+    })
   });
 })

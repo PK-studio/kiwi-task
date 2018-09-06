@@ -58,7 +58,6 @@ module.exports = {
 
     this.matchAndReplaceNumbersWithWords = () => {
       let phrase = "test";
-      let [a,b,c] = [null,null,null]
       let groupSuffix;
       let setupGroupSuffix = (groupIndex) =>{
         switch (groupIndex){
@@ -92,8 +91,8 @@ module.exports = {
         });
       };
 
-      groups.forEach((element, groupIndex) => {
-        [a,b,c] = element;
+      groups.forEach((arrayOfNum, groupIndex) => {
+        let [a,b,c] = arrayOfNum
         setupGroupSuffix(groupIndex)
         checkAndReplace(a)
         checkAndReplace(b+''+c)

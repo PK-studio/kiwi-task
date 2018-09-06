@@ -92,8 +92,9 @@ module.exports = {
         });
       };
 
-      groups.forEach((element, groupIndex) => {
-        [a,b,c] = element;
+      // groups.forEach((element, groupIndex) => {
+        // [a,b,c] = element;
+        [a,b,c] = groups[2];
         setupGroupSuffix(groupIndex)
         checkAndReplace(a)
         checkAndReplace(b+''+c)
@@ -102,7 +103,7 @@ module.exports = {
           checkAndReplace(c)
         }
         phrase += groupSuffix;
-      });
+      // });
 
       return phrase;
     }

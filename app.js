@@ -56,5 +56,55 @@ module.exports = {
       return groups;
     }
 
+    this.matchAndReplaceNumbersWithWords = () => {
+      let phrase = "test";
+      let [a,b,c] = [null,null,null]
+      let groupSuffix;
+      let setupGroupSuffix = (groupIndex) =>{
+        switch (groupIndex){
+          case 0:
+            groupSuffix = 'million, ';
+            break;
+          case 1:
+            groupSuffix = 'thousand, ';
+            break;
+          case 2:
+            groupSuffix = '';
+            break;
+        }
+      }
+      let changeValueForProp = (prop) => {
+        if(prop.length == 2){
+          prop.split('').forEach((singleProp) => {
+            singleProp = null;
+          });
+        }else{
+          prop = null;
+        };
+      };
+      let checkAndReplace = (prop) => {
+        let numberSuffix = (prop == 'a' ? ' hundred and ' : '');
+        Object.keys(table).forEach((numberFromTable, tableIndex) => {
+          if(numberFromTable == prop){
+            phrase += (Object.values(table)[tableIndex] + numberSuffix);
+            changeValueForProp(prop);
+          };
+        });
+      };
+
+      groups.forEach((element, groupIndex) => {
+        [a,b,c] = element;
+        setupGroupSuffix(groupIndex)
+        checkAndReplace(a)
+        checkAndReplace(b+''+c)
+        if([a,b] != null){
+          checkAndReplace(b)
+          checkAndReplace(c)
+        }
+        phrase += groupSuffix;
+      });
+
+      return phrase;
+    }
   }
 };

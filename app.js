@@ -43,7 +43,7 @@ module.exports = {
     this.converToArray = () => {
       arrayOfDigits = number.toString().split("");
       while(arrayOfDigits.length < 9){
-        arrayOfDigits.unshift(0)
+        arrayOfDigits.unshift('0')
       }
       return arrayOfDigits
     };
@@ -92,9 +92,8 @@ module.exports = {
         });
       };
 
-      // groups.forEach((element, groupIndex) => {
-        // [a,b,c] = element;
-        [a,b,c] = groups[2];
+      groups.forEach((element, groupIndex) => {
+        [a,b,c] = element;
         setupGroupSuffix(groupIndex)
         checkAndReplace(a)
         checkAndReplace(b+''+c)
@@ -103,7 +102,7 @@ module.exports = {
           checkAndReplace(c)
         }
         phrase += groupSuffix;
-      // });
+      });
 
       return phrase;
     }

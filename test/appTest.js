@@ -38,6 +38,11 @@ describe('Test for this app: replace number with words', () => {
       app.groupElements().forEach(element => {
         expect(element.length).to.equal(3);
       });
+    });
+    it('each array should contains 3 strings', () => {
+      app.groupElements().forEach(element => {
+        expect(element).to.be.a('string');
+      });
     })
   })
 

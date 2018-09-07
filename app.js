@@ -73,31 +73,38 @@ module.exports = {
         }
         return suffix;
       }
-      let checkAndReplace = (value, suffixOfNum, tensAndOnes) => {
+      let checkAndReplace = (value, suffixOfNum, prefixOfNum, tens) => {
         let done = false;
+        if(value == 0) return done;
         Object.keys(table).forEach((numberFromTable, tableIndex) => {
           if(numberFromTable == value){
             let word = Object.values(table)[tableIndex]
-            phrase += (word + suffixOfNum);
-            if(tensAndOnes) done=true;
+            phrase += (prefixOfNum + word + ' ' + suffixOfNum);
+            if(tens) done=true;
           }
         });
         return done;
       };
+      let isZero = (value) => {return value == "0"};
+      let lastWord = () => {
+        let toArray = phrase.split(" ");
+        return toArray[toArray.length-1]
+      }
       groups.forEach((arrayOfNum, groupIndex) => {
+        if(arrayOfNum.every(isZero)) return null;
         let [a,b,c] = arrayOfNum
         let checkList = [a, b+''+c, b+'0', c]
         checkList.some((value, position) => {
-          let suffixOfNum = (position === 0) ? ' hundred and ' : '';
-          let tensAndOnes = (position === 1) ? true : false;
-          let isDone = checkAndReplace(value, suffixOfNum, tensAndOnes)
+          let suffixOfNum = (position === 0) ? 'hundred' : '';
+          let prefixOfNum = (lastWord() == 'hundred') ? ' and ' : '';
+          let tens = (position === 1) ? true : false;
+          let isDone = checkAndReplace(value, suffixOfNum, prefixOfNum, tens)
           if(isDone) return true;
         })
         phrase += suffixOfGroup(groupIndex);
       });
-      return phrase;
+      return phrase.trim();
     }
-    
     this.try = (num) => {
       this.passNumber(num);
       this.converToArray();

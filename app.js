@@ -57,53 +57,52 @@ module.exports = {
     }
 
     this.matchAndReplaceNumbersWithWords = () => {
-      let phrase = "test";
-      let groupSuffix;
-      let setupGroupSuffix = (groupIndex) =>{
+      let phrase = "";
+      let suffixOfGroup = (groupIndex) =>{
+        let suffix;
         switch (groupIndex){
           case 0:
-            groupSuffix = 'million, ';
+            suffix = 'million, ';
             break;
           case 1:
-            groupSuffix = 'thousand, ';
+            suffix = 'thousand, ';
             break;
           case 2:
-            groupSuffix = '';
+            suffix = '';
             break;
         }
+        return suffix;
       }
-      let changeValueForProp = (prop) => {
-        if(prop.length == 2){
-          prop.split('').forEach((singleProp) => {
-            singleProp = null;
-          });
-        }else{
-          prop = null;
-        };
-      };
-      let checkAndReplace = (prop) => {
-        let numberSuffix = (prop == 'a' ? ' hundred and ' : '');
+      let checkAndReplace = (value, suffixOfNum, tensAndOnes) => {
+        let done = false;
         Object.keys(table).forEach((numberFromTable, tableIndex) => {
-          if(numberFromTable == prop){
-            phrase += (Object.values(table)[tableIndex] + numberSuffix);
-            changeValueForProp(prop);
-          };
+          if(numberFromTable == value){
+            let word = Object.values(table)[tableIndex]
+            phrase += (word + suffixOfNum);
+            if(tensAndOnes) done=true;
+          }
         });
+        return done;
       };
-
       groups.forEach((arrayOfNum, groupIndex) => {
         let [a,b,c] = arrayOfNum
-        setupGroupSuffix(groupIndex)
-        checkAndReplace(a)
-        checkAndReplace(b+''+c)
-        if([a,b] != null){
-          checkAndReplace(b)
-          checkAndReplace(c)
-        }
-        phrase += groupSuffix;
+        let checkList = [a, b+''+c, b+'0', c]
+        checkList.some((value, position) => {
+          let suffixOfNum = (position === 0) ? ' hundred and ' : '';
+          let tensAndOnes = (position === 1) ? true : false;
+          let isDone = checkAndReplace(value, suffixOfNum, tensAndOnes)
+          if(isDone) return true;
+        })
+        phrase += suffixOfGroup(groupIndex);
       });
-
       return phrase;
+    }
+    
+    this.try = (num) => {
+      this.passNumber(num);
+      this.converToArray();
+      this.groupElements();
+      return this.matchAndReplaceNumbersWithWords();
     }
   }
 };

@@ -8,6 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="Patryk Karwowski">
 
+
   <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
   <script>
     const app = function() {
@@ -61,7 +62,7 @@
 
       this.groupElements = () => {
         groups = new Array;
-        while(arrayOfDigits.length > 0){
+        while(arrayOfDigits.length > 1){
           groups.push(arrayOfDigits.splice(0,3))
         };
         return groups;
@@ -114,20 +115,31 @@
           })
           phrase += suffixOfGroup(groupIndex);
         });
-        return phrase;
+        return phrase.trim();
       }
-      this.try = (num) => {
-        this.passNumber(num);
+      this.try = (input) => {
+        if(!input) return;
+        this.passNumber(Number(input));
         this.converToArray();
         this.groupElements();
         return this.matchAndReplaceNumbersWithWords();
       }
     }
-    const myApp = new app();
   </script>
 </head>
-
+  <div>
+    <h1>Pass number</h1>
+    <input id="input" type="number" value="" min="1" max="999999999">
+    <p id="words"></p>
+  </div>
+  <script>
+      const myApp = new app();
+      const inputNum = document.getElementById("input");
+      const words = document.getElementById("words");
+      inputNum.addEventListener("change", function(){
+        words.innerHTML=myApp.try(this.value);
+      })
+  </script>
 <body>
-
 </body>
 </html>

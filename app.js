@@ -105,8 +105,9 @@ module.exports = {
       });
       return phrase.trim();
     }
-    this.try = (num) => {
-      this.passNumber(num);
+    this.try = (input) => {
+      if(!input) return;
+      this.passNumber(Number(input));
       this.converToArray();
       this.groupElements();
       return this.matchAndReplaceNumbersWithWords();
